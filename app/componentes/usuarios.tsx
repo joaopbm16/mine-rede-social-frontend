@@ -61,10 +61,12 @@ const Usuarios = () => {
                 </table>
             </div>
             {usuarioSelecionado && (
-                <UsuarioEditar usuario={usuarioSelecionado} />
+                <UsuarioEditar
+                 usuario={usuarioSelecionado}
+                 onClose={() => setUsuarioSelecionado(null)}
+                  />
             )}
         </>
-
     );
 };
 

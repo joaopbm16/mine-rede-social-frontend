@@ -9,25 +9,25 @@ const Usuarios = () => {
     const [usuarioSelecionado, setUsuarioSelecionado] = useState<any | null>(null)
 
     useEffect(() => {
-        const fetchBuscaUsuario = async () => {
-            const response = await usuarioFindAll();
-            if (response) {
-                setUsuarios(response)
-            } else {
-                return [];
-            }
-
-        };
-
         fetchBuscaUsuario()
     }, []);
+
+    const fetchBuscaUsuario = async () => {
+        const response = await usuarioFindAll();
+        if (response) {
+            setUsuarios(response)
+        } else {
+            return [];
+        }
+
+    };
 
     function handleEditar(usuario: any) {
         setUsuarioSelecionado(usuario);
     }
 
     function handleExcluir(id: any) {
-       alert(id)
+        alert(id)
     }
 
     return (
@@ -62,9 +62,14 @@ const Usuarios = () => {
             </div>
             {usuarioSelecionado && (
                 <UsuarioEditar
-                 usuario={usuarioSelecionado}
-                 onClose={() => setUsuarioSelecionado(null)}
-                  />
+                    usuario={usuarioSelecionado}
+                    onClose={() => setUsuarioSelecionado(null)}
+                    onAtualizar={async () => {
+                        await fetchBuscaUsuario();
+                        setUsuarioSelecionado(null)
+                    }
+                    }
+                />
             )}
         </>
     );

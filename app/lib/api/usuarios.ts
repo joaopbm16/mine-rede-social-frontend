@@ -19,7 +19,11 @@ export async function usuarioFindAll(): Promise<any> {
 export async function usuarioUpdate(id: number, body: any): Promise<any> {
     try {
         const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
-            method: 'PATCH'
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
         });
 
         if (response.ok) {
@@ -31,3 +35,4 @@ export async function usuarioUpdate(id: number, body: any): Promise<any> {
         return []
     }
 }
+

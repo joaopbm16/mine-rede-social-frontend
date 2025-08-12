@@ -1,16 +1,16 @@
 import { FormEvent, useState } from "react";
-import { usuarioUpdate } from "../lib/api/usuarios";
+import { usuarioCreate, usuarioUpdate } from "../lib/api/usuarios";
 
 interface proposUsuario {
-    usuario: any;
+    usuario?: any;
     onClose: () => void;
-    onAtualizar:() => void;
+    onAtualizar: () => void;
 }
 
 const UsuarioEditar = (props: proposUsuario) => {
-    const [nome, setNome] = useState(props.usuario.nome_usua);
-    const [email, setEmail] = useState(props.usuario.email_usua);
-    const [senha, setSenha] = useState(props.usuario.senha_usua);
+    const [nome, setNome] = useState(props.usuario?.nome_usua ?? "");
+    const [email, setEmail] = useState(props.usuario?.email_usua ?? "");
+    const [senha, setSenha] = useState(props.usuario?.senha_usua ?? "");
 
     async function handleSumit(e: FormEvent) {
         e.preventDefault();
@@ -21,17 +21,25 @@ const UsuarioEditar = (props: proposUsuario) => {
             senha_usua: senha,
         };
 
-        const response = await usuarioUpdate(props.usuario.id, usuarioAtualizado);
-        if(response){
-              props.onAtualizar() 
-        }else{
-            alert("Usuário não atualizado")
+
+
+        let response
+        if (props.usuario) {
+            response = await usuarioUpdate(props.usuario.id, usuarioAtualizado);
+        } else {
+            response = await usuarioCreate(usuarioAtualizado);
+        }
+
+        if (response) {
+            props.onAtualizar();
+        } else {
+            alert("Erro ao atualizar o usuário")
         }
     }
 
     return (
         <div style={{ border: '1px solid black', padding: 25, marginTop: 20, maxWidth: "250px" }}>
-            <h2>Editar Usuário</h2>
+            <h2>{!props.usuario ? "Cadastrar Usuário" : "Editar Usuário"}</h2>
             <form onSubmit={handleSumit}>
                 <div>
                     <label>Nome:</label>

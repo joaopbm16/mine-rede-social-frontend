@@ -1,12 +1,13 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { usuarioFindAll } from "../lib/api/usuarios";
+import { usuarioDelete, usuarioFindAll } from "../lib/api/usuarios";
 import UsuarioEditar from "./usuarioEditar";
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState<any[]>([])
     const [usuarioSelecionado, setUsuarioSelecionado] = useState<any | null>(null)
+    const [cadastrarUsuario, setCadastrarUsuario] = useState(false);
 
     useEffect(() => {
         fetchBuscaUsuario()
@@ -26,14 +27,19 @@ const Usuarios = () => {
         setUsuarioSelecionado(usuario);
     }
 
-    function handleExcluir(id: any) {
-        alert(id)
+    async function handleExcluir(id: any) {
+        const response = await usuarioDelete(id)
+        if (response) {
+            fetchBuscaUsuario()
+        }
+
     }
 
     return (
         <>
             <div>
                 <h2>Lista de Usuário</h2>
+                <><button onClick={() => setCadastrarUsuario(true)}>Adicionar</button></>
                 <table border={1} cellPadding={5} cellSpacing={0}>
                     <thead>
                         <tr>
@@ -68,8 +74,17 @@ const Usuarios = () => {
                         await fetchBuscaUsuario();
                         setUsuarioSelecionado(null)
                     }
+                    } />
+            )}
+
+            {cadastrarUsuario && (
+                <UsuarioEditar
+                    onClose={() => setCadastrarUsuario(false)}
+                    onAtualizar={async () => {
+                        await fetchBuscaUsuario();
+                        setCadastrarUsuario(false)
                     }
-                />
+                    } />
             )}
         </>
     );

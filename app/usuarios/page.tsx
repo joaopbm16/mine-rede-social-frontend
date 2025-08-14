@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usuarioDelete, usuarioFindAll } from "../lib/api/usuarios";
-import UsuarioEditar from "./usuarioEditar";
+import UsuarioEditar from "../componentes/usuarioEditar";
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState<any[]>([])
@@ -13,15 +13,14 @@ const Usuarios = () => {
         fetchBuscaUsuario()
     }, []);
 
-    const fetchBuscaUsuario = async () => {
+    async function fetchBuscaUsuario() {
         const response = await usuarioFindAll();
         if (response) {
             setUsuarios(response)
         } else {
             return [];
         }
-
-    };
+    }
 
     function handleEditar(usuario: any) {
         setUsuarioSelecionado(usuario);
@@ -91,8 +90,5 @@ const Usuarios = () => {
 };
 
 export default Usuarios
-
-
-
 
 

@@ -1,8 +1,9 @@
 'use client'
 
+import "./page.css";
 import { useEffect, useState } from "react";
 import { usuarioDelete, usuarioFindAll } from "../lib/api/usuarios";
-import UsuarioEditar from "../componentes/usuarioEditar";
+import UsuarioEditar from "../componentes/usuarios/usuarioEditar";
 
 const Usuarios = () => {
     const [usuarios, setUsuarios] = useState<any[]>([])
@@ -35,11 +36,11 @@ const Usuarios = () => {
     }
 
     return (
-        <>
+        <div className="table-container">
             <div>
                 <h2>Lista de Usuário</h2>
-                <><button onClick={() => setCadastrarUsuario(true)}>Adicionar</button></>
-                <table border={1} cellPadding={5} cellSpacing={0}>
+                <><button className="btn-edit" onClick={() => setCadastrarUsuario(true)}>Adicionar</button></>
+                <table>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -57,8 +58,8 @@ const Usuarios = () => {
                                 <td>{usuario.email_usua}</td>
                                 <td>{usuario.senha_usua}</td>
                                 <td>
-                                    <button onClick={() => handleEditar(usuario)}>Editar</button>
-                                    <button onClick={() => handleExcluir(usuario.id)}>Excluir</button>
+                                    <button className="btn-edit" onClick={() => handleEditar(usuario)}>Editar</button>
+                                    <button className="btn-excluir" onClick={() => handleExcluir(usuario.id)}>Excluir</button>
                                 </td>
                             </tr>
                         ))}
@@ -85,7 +86,7 @@ const Usuarios = () => {
                     }
                     } />
             )}
-        </>
+        </div>
     );
 };
 

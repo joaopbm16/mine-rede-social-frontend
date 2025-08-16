@@ -1,24 +1,28 @@
+import { typeUsuarios } from "@/app/types/types";
 
-export async function usuarioFindAll(): Promise<any> {
+export async function usuarioFindAll(): Promise<typeUsuarios[] | undefined> {
     try {
-        const response = await fetch('http://localhost:3000/usuarios', {
-            method: 'GET'
-        })
+        const response = await fetch("http://localhost:3000/usuarios", {
+            method: "GET",
+        });
 
         if (response.ok) {
-            const data = await response.json();
-            return data
+            const data: typeUsuarios[] = await response.json();
+            return data;
         }
     } catch {
-        alert('Erro ao buscar usuários')
-        return []
+        alert("Erro ao buscar usuários");
+        return [];
     }
 }
 
-export async function usuarioUpdate(id: number, body: any): Promise<any> {
+export async function usuarioUpdate(
+    id: number,
+    body: typeUsuarios
+): Promise<typeUsuarios | undefined> {
     try {
         const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
-            method: 'PATCH',
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -26,48 +30,51 @@ export async function usuarioUpdate(id: number, body: any): Promise<any> {
         });
 
         if (response.ok) {
-            const data = await response.json();
-            return data
+            const data: typeUsuarios = await response.json();
+            return data;
         }
     } catch {
-        alert('Erro ao buscar usuários')
-        return []
+        alert("Erro ao alterar o usuário");
+        return undefined;
     }
 }
 
-export async function usuarioDelete(id: number): Promise<any> {
+export async function usuarioDelete(
+    id: number
+): Promise<typeUsuarios | undefined> {
     try {
         const response = await fetch(`http://localhost:3000/usuarios/${id}`, {
-            method: 'DELETE',
-
+            method: "DELETE",
         });
 
         if (response.ok) {
-            const data = await response.json();
-            return data
+            const data: typeUsuarios = await response.json();
+            return data;
         }
     } catch {
-        alert('Erro ao alterar usuários')
-        return []
+        alert("Erro ao alterar o usuário");
+        return undefined;
     }
 }
 
-export async function usuarioCreate(body: any): Promise<any> {
+export async function usuarioCreate(
+    body: typeUsuarios
+): Promise<typeUsuarios | undefined> {
     try {
         const response = await fetch(`http://localhost:3000/usuarios/`, {
-            method: 'POST',
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
         });
 
         if (response.ok) {
-            const data = await response.json();
-            return data
+            const data: typeUsuarios = await response.json();
+            return data;
         }
     } catch {
-        alert('Erro ao alterar usuários')
-        return []
+        alert("Erro ao alterar o usuário");
+        return undefined;
     }
 }

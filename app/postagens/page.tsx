@@ -7,7 +7,7 @@ interface Mensagem {
   texto: string;
   data: Date;
   enviadaPorMin: boolean;
-}
+}  
 
 const postagem = () => {
   const [novaMensagem, setNovaMensagem] = useState<string>("");

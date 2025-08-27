@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import EmojiPicker from "../componentes/emoji";
 
 interface Mensagem {
   id: number;
@@ -12,6 +13,7 @@ interface Mensagem {
 const postagem = () => {
   const [novaMensagem, setNovaMensagem] = useState<string>("");
   const [mensagem, setMensagem] = useState<Mensagem[]>([]);
+  const [showEmoji, setShowEmoji] = useState<boolean>(false);
 
   const handleEnviar = () => {
     if (!novaMensagem.trim()) return;
@@ -81,6 +83,26 @@ const postagem = () => {
       </div>
 
       <div style={{ display: "flex", gap: "10px" }}>
+        <button style={{
+          padding: "8px 12px",
+          background:"#f0f0f0",
+          border: "1px solid #ccc",
+          borderRadius: "6px",
+          cursor: "pointer",
+        }}
+        onClick={() => setShowEmoji(!showEmoji)}
+        >
+          😀
+          </button>
+
+          {showEmoji && (
+            <EmojiPicker onSelect={(emoji) => {
+              setNovaMensagem((prev) => prev + emoji);
+              setShowEmoji(false);
+            }}
+            ></EmojiPicker>
+          )}
+
         <input
           type="text"
           placeholder="Digite sua mensagem..."

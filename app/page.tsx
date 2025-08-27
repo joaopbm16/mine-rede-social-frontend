@@ -1,6 +1,11 @@
+//Login
+
 "use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useAuth } from "./context/context";
 import { usuarioFindOneByEmailPass } from "./lib/api/usuarios";
 import { typeUsuarios } from "./types/types";
 
@@ -10,15 +15,22 @@ const Index = () => {
   const [usuarios, setUsuarios] = useState<typeUsuarios>();
   const [erro, setErro] = useState("");
 
+  const { login } = useAuth();
+  const router = useRouter();
+
   const fetchBuscaUsuario = async (email: string, pass: string) => {
     const response = await usuarioFindOneByEmailPass(email, pass);
     if (response) {
       setUsuarios(response);
-      setErro("")
+      setErro("");
+      login();
+
+      router.push("/postagens");
     } else {
-      setErro('email ou senha inválida');
+      setErro("email ou senha inválida");
     }
   };
+
   return (
     <div
       style={{
@@ -28,6 +40,7 @@ const Index = () => {
         justifyContent: "center",
         height: "100vh",
         background: "transparent",
+        overflow: "hidden",
       }}
     >
       <div
@@ -42,42 +55,47 @@ const Index = () => {
         <h1 style={{ color: "#1976d2", marginBottom: "20px" }}>
           Mini Rede Social
         </h1>
-
         <p style={{ fontSize: "14px", marginBottom: "20px", color: "#555" }}>
           Faça login para continuar
         </p>
 
         <input
           style={{
-            width: "94%",
+            width: "100%", // 👈 ajustei pra 100% em vez de 94%
             marginBottom: "12px",
             padding: "12px",
             borderRadius: "8px",
             border: "1px solid #ccc",
             outline: "none",
             transition: "border-color 0.3s",
+            boxSizing: "border-box",
           }}
           type="email"
           placeholder="E-mail"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
 
         <input
           style={{
-            width: "94%",
-            marginBottom: "12px",
+            width: "100%", // 👈 idem aqui
             padding: "12px",
+            marginBottom: "12px",
             borderRadius: "8px",
             border: "1px solid #ccc",
             outline: "none",
             transition: "border-color 0.3s",
+            boxSizing: "border-box",
           }}
-          type="Password"
+          type="password"
           placeholder="Senha"
           value={pass}
-          onChange={(e) => setPass(e.target.value)}
-        ></input>
+          onChange={(e) => {
+            setPass(e.target.value);
+          }}
+        />
 
         {erro && (
           <p style={{ color: "red", font: "14px", marginBottom: "10px" }}>
@@ -96,7 +114,7 @@ const Index = () => {
             border: "none",
             borderRadius: "8px",
             cursor: "pointer",
-            transition: "backgroud 0.3s aese, transform 0.2s aese",
+            transition: "background 0.3s ease, transform 0.2s ease",
           }}
         >
           Entrar

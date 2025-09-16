@@ -1,0 +1,54 @@
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+    padding: 14px;
+}
+
+.btn-edit {
+    margin-bottom: 10px;
+    color: white;
+    background-color: #1976d2;
+}
+
+.btn-delete {
+    color: white;
+    background-color: red;
+}
+
+button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 8px;
+    margin: 2px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    opacity: 0.5;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+thead {
+    background-color: #1976d2;
+    color: white;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+tbody tr:hover {
+    background: #e0f0ff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}

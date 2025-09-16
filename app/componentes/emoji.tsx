@@ -23,8 +23,8 @@ const EmojiPicker = (props: propsEmoji) => {
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
             zIndex: 100,
         }}>
-            {emojiList.map((emoji) => (
-                <button key={emoji} style={{
+            {emojiList.map((emoji,index) => (
+                <button key={index} style={{
                     fontSize: "20px",
                     background: "transparent",
                     border: "none",
